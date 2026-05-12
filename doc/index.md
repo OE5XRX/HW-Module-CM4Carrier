@@ -24,7 +24,7 @@ Trägerplatine für das Raspberry Pi Compute Module 4 (CM4). Das CM4 steckt übe
 - **USB-Host** — über den Bus-Stecker zum [BusBoard](../HW-Module-BusBoard/) → FE1.1s-Hub → 4 Modul-Slots.
 - **I²C** — über den Bus-Stecker zum [PowerBoard](../HW-Module-PowerBoard/) (Lesen der INA226-Messwerte).
 - **UART-Debug** — 3-Pin-Header `J102` direkt für seriellen Konsolen-Zugriff (siehe „Debug-Header" unten).
-- **rpiboot** — Flash-Pin (`nRPIBOOT`) ist auf den Bus-Stecker geführt; wird durch das [DeviceTester-Modul](../HW-Module-DeviceTester/) auf GND gezogen, sobald der Carrier dort eingesteckt ist.
+- **rpiboot** — Flash-Pin (`nRPIBOOT`) ist auf den Bus-Stecker geführt; wird im [DeviceTester](../HW-Module-DeviceTester/) per **manuell gesetztem Jumper** am 4-Pin Flash-Header (`J202`) auf GND gezogen, um den CM4 in den Flash-Modus zu versetzen.
 
 ## Block-Diagramm
 
@@ -124,13 +124,20 @@ Standard UART-Parameter des CM4-Bootloaders + Raspberry Pi OS: **115200 8N1** (s
 
 ## rpiboot-Workflow (CM4 flashen)
 
-Der CM4-Carrier hat **keinen eigenen rpiboot-Jumper**. Stattdessen ist der `nRPIBOOT`-Pin auf den Bus-Stecker `J101 b9` geführt und wird durch das [DeviceTester-Modul](../HW-Module-DeviceTester/) auf GND gezogen, wenn man den Carrier dort einsteckt.
+Der CM4-Carrier hat **keinen eigenen rpiboot-Jumper**. Stattdessen sind die zwei dafür nötigen Pins (`nRPIBOOT` und `USB_OTG_ID`) auf den Bus-Stecker geführt (`J101 b9` und `J101 b8`). Auf dem [DeviceTester](../HW-Module-DeviceTester/) werden sie über den 4-Pin Flash-Header `J202` **manuell** per Jumper auf GND gelegt:
+
+- **`nRPIBOOT` → GND** versetzt den CM4 nach Power-Up in den USB-Boot-Modus statt vom eMMC/SD zu booten.
+- **`USB_OTG_ID` → GND** schaltet die USB-Schnittstelle in den Device-Mode (CM4 als USB-Gerät, PC als Host).
 
 Ablauf:
 
-1. Carrier in den DeviceTester einsetzen (entsprechenden Jumper am DeviceTester setzen — siehe DeviceTester-Doku).
-2. DeviceTester per USB-C mit dem PC verbinden.
-3. `rpiboot` auf dem PC starten — der CM4 erscheint als USB-Mass-Storage-Device (für eMMC) bzw. wartet auf Image-Schreib-Kommando.
+1. CM4 in den Carrier einsetzen, Carrier in den DeviceTester (Bus-Stecker `J101` ↔ DeviceTester `J203`) einsetzen.
+2. Auf dem DeviceTester am 4-Pin-Header `J202` **beide** Jumper setzen — Pin 1↔2 (nRPIBOOT auf GND) und Pin 1↔3 (USB_OTG_ID auf GND).
+3. DeviceTester per USB-C mit dem PC verbinden (`J201`).
+4. `rpiboot` auf dem PC starten — der CM4 erscheint als USB-Mass-Storage-Device (eMMC-Variante) bzw. erlaubt einen direkten Image-Schreib-Vorgang.
+5. Nach Abschluss: Jumper am DeviceTester wieder abziehen, sonst bootet der Carrier beim nächsten Power-Up wieder in den rpiboot-Mode statt regulär.
+
+⚠️ **Funktioniert nur mit der eMMC-Variante** des CM4 — eMMC-less / lite-CM4s booten ohnehin von SD und brauchen keinen Flash-Schritt; einfach SD-Karte mit dem Image bestücken.
 
 ## Bringup
 
