@@ -401,7 +401,7 @@
 		(property ki_fp_filters "CP_*")
 		(path "/0110e4c1-453e-41d4-8d9c-59468bc248ec")
 		(sheetname "/")
-		(sheetfile "main.kicad_sch")
+		(sheetfile "CM4Carrier.kicad_sch")
 		(attr smd)
 		(fp_line
 			(start -4.415 2.26)
@@ -6086,7 +6086,7 @@
 		(property ki_fp_filters "Connector*:*_2x??_*")
 		(path "/87c3928c-2b75-4acb-9ad4-c543ec4deb0e")
 		(sheetname "/")
-		(sheetfile "main.kicad_sch")
+		(sheetfile "CM4Carrier.kicad_sch")
 		(attr through_hole)
 		(fp_line
 			(start -10.12 2.54)
@@ -8041,7 +8041,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/df999db3-7087-40c6-8ce3-d5dd370ce265")
 		(sheetname "/")
-		(sheetfile "main.kicad_sch")
+		(sheetfile "CM4Carrier.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
 		(fp_circle
 			(center 0 0)
@@ -9014,7 +9014,7 @@
 		(property ki_fp_filters "MountingHole*")
 		(path "/232daf58-0468-4f94-bfdb-9142284c844d")
 		(sheetname "/")
-		(sheetfile "main.kicad_sch")
+		(sheetfile "CM4Carrier.kicad_sch")
 		(attr exclude_from_pos_files exclude_from_bom)
 		(fp_circle
 			(center 0 0)
@@ -9346,7 +9346,7 @@
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/cfdc7c95-d34a-4638-a53a-a38bae970c0b")
 		(sheetname "/")
-		(sheetfile "main.kicad_sch")
+		(sheetfile "CM4Carrier.kicad_sch")
 		(attr through_hole)
 		(fp_line
 			(start 10.15 5.51)
