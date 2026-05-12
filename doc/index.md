@@ -124,15 +124,15 @@ Standard UART-Parameter des CM4-Bootloaders + Raspberry Pi OS: **115200 8N1** (s
 
 ## rpiboot-Workflow (CM4 flashen)
 
-Der CM4-Carrier hat **keinen eigenen rpiboot-Jumper**. Stattdessen sind die zwei dafür nötigen Pins (`nRPIBOOT` und `USB_OTG_ID`) auf den Bus-Stecker geführt (`J101 b9` und `J101 b8`). Auf dem [DeviceTester](../HW-Module-DeviceTester/) werden sie über den 4-Pin Flash-Header `J202` **manuell** per Jumper auf GND gelegt:
+Der CM4-Carrier hat **keinen eigenen rpiboot-Jumper**. Stattdessen sind die zwei dafür nötigen Pins (`nRPIBOOT` und `USB_OTG_ID`) auf den Bus-Stecker geführt (`J101 b9` und `J101 b8`). Auf dem [DeviceTester](../HW-Module-DeviceTester/) werden sie über den 4-Pin Flash-Header `J202` **manuell** per Jumper gesetzt — beide Pins nebeneinander mit jeweils GND bzw. +5V als Nachbar:
 
-- **`nRPIBOOT` → GND** versetzt den CM4 nach Power-Up in den USB-Boot-Modus statt vom eMMC/SD zu booten.
-- **`USB_OTG_ID` → GND** schaltet die USB-Schnittstelle in den Device-Mode (CM4 als USB-Gerät, PC als Host).
+- **`nRPIBOOT` → GND** (Pin 2 ↔ Pin 1): versetzt den CM4 nach Power-Up in den USB-Boot-Modus statt vom eMMC zu booten.
+- **`USB_OTG_ID` → +5V** (Pin 3 ↔ Pin 4): schaltet die USB-Schnittstelle in den Device-Mode (CM4 als USB-Gerät, PC als Host).
 
 Ablauf:
 
 1. CM4 in den Carrier einsetzen, Carrier in den DeviceTester (Bus-Stecker `J101` ↔ DeviceTester `J203`) einsetzen.
-2. Auf dem DeviceTester am 4-Pin-Header `J202` **beide** Jumper setzen — Pin 1↔2 (nRPIBOOT auf GND) und Pin 1↔3 (USB_OTG_ID auf GND).
+2. Auf dem DeviceTester am 4-Pin-Header `J202` **beide** Jumper setzen — Pin 1↔2 (nRPIBOOT auf GND) und Pin 3↔4 (USB_OTG_ID auf +5V).
 3. DeviceTester per USB-C mit dem PC verbinden (`J201`).
 4. `rpiboot` auf dem PC starten — der CM4 erscheint als USB-Mass-Storage-Device (eMMC-Variante) bzw. erlaubt einen direkten Image-Schreib-Vorgang.
 5. Nach Abschluss: Jumper am DeviceTester wieder abziehen, sonst bootet der Carrier beim nächsten Power-Up wieder in den rpiboot-Mode statt regulär.
