@@ -58,7 +58,12 @@ flowchart LR
 | eMMC-less / „lite" (alle RAM-Größen) | ✅ | **Test/Entwicklung** — Boot von microSD |
 | Wifi-Variante | ❌ | nicht vorgesehen — keine Antennen-Anbindung auf dem Carrier |
 
-Default-Verhalten: eMMC-Varianten booten primär vom eMMC, lite-Varianten von microSD. Die **Boot-Reihenfolge ist über das `rpi-eeprom-config` Bootloader-Setting konfigurierbar** — eMMC-Varianten können also auch zum SD-Boot gezwungen werden, falls gewünscht (Recovery-Szenarien, Test-Setups).
+Auf diesem Carrier ist **kein Mix-and-Match** möglich — das jeweils andere Boot-Medium ist hardware-seitig nicht erreichbar:
+
+- eMMC-Varianten booten **immer** vom eMMC. Der CM4 verbindet seinen MMC1-Bus intern fest mit dem eMMC; der externe microSD-Slot dieses Carriers ist physisch nicht angeschlossen.
+- lite-Varianten booten **immer** vom microSD-Slot. Hier ist MMC1 auf den externen SD-Pfad geführt; ein eMMC ist nicht bestückt.
+
+Die `rpi-eeprom-config`-Boot-Order ist zwar grundsätzlich auf CM4-Ebene konfigurierbar — auf diesem Carrier hat sie aber keinen Effekt, weil das alternative Boot-Medium physisch nicht erreichbar ist.
 
 ## Steckverbinder
 
