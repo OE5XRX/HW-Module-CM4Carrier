@@ -64,7 +64,7 @@ Der CM4 ermittelt das Boot-Medium automatisch anhand seiner Hardware: eMMC-Varia
 
 | Bezeichner | Typ | Funktion |
 | ---------- | --- | -------- |
-| **J101** | 20-Pin (Hirose PCN10-20P-2.54DSA) | Bus-Anschluss zum [BusBoard](../HW-Module-BusBoard/). Versorgung (+5V/+12V/GND), USB-Host, I²C, USB_ID, nRPIBOOT. |
+| **J101** | 20-Pin (Hirose **PCN10C-20S-2.54DS** — weibliche Buchse, paart mit dem PCN10-20P-Stift-Header auf dem BusBoard) | Bus-Anschluss zum [BusBoard](../HW-Module-BusBoard/). Versorgung (+5V/+12V/GND), USB-Host, I²C, USB_ID, nRPIBOOT. |
 | **J102** | 3-Pin Header (2.54 mm Raster) | UART-Debug. Pin 1 = `GND`, Pin 2 = `RXD0`, Pin 3 = `TXD0`. *Pin-1-Lage im Silkscreen noch nicht markiert — siehe [Issue #3](https://github.com/OE5XRX/HW-Module-CM4Carrier/issues/3).* |
 | **J201, J202** | 2× DF40C-100DS-0.4V_51_ | CM4-Footprint (Board-to-Board, 0.4 mm Raster, 100 Pin pro Stecker). |
 | **J301** | HR911130A RJ45 | Gigabit Ethernet inkl. Magnetics + Link/Activity-LEDs. |
