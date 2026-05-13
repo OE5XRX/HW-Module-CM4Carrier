@@ -31,7 +31,8 @@ Trägerplatine für das Raspberry Pi Compute Module 4 (CM4). Das CM4 steckt übe
 ```mermaid
 flowchart LR
     CM4["CM4<br/>(2× DF40C-100DS)"]
-    CM4 <-->|"RGMII"| RJ45["HR911130A<br/>RJ45 + Magnetics"]
+    CM4 <-->|"MDI (4× TRD)"| ESDeth["TPD4EUSB30 ×2<br/>(MDI ESD)"]
+    ESDeth <--> RJ45["HR911130A<br/>RJ45 + Magnetics"]
     CM4 <-->|"SD bus"| SD["microSD<br/>(TF-01A)"]
     CM4 -->|"SD_PWR_ON"| LS["RT9742<br/>Load-Switch"]
     LS -->|"+3V3 gated"| SD
@@ -39,8 +40,7 @@ flowchart LR
     Buf --> LEDp["Power-LED D202"]
     CM4 -->|"LED_nACTIVITY"| LEDa["Activity-LED D201"]
 
-    CM4 -->|"USB D±, USB_ID, I²C, nRPIBOOT"| ESD["TPD4EUSB30 ×2<br/>(USB ESD)"]
-    ESD --> Bus["Bus-Stecker J101"]
+    CM4 -->|"USB D+/D-, USB_ID, I²C, nRPIBOOT"| Bus["Bus-Stecker J101"]
 
     UART(["UART RXD0 / TXD0"]) <--> CM4
     UART --> J102["J102 Debug-Header"]
@@ -58,7 +58,7 @@ flowchart LR
 | eMMC-less / „lite" (alle RAM-Größen) | ✅ | **Test/Entwicklung** — Boot von microSD |
 | Wifi-Variante | ❌ | nicht vorgesehen — keine Antennen-Anbindung auf dem Carrier |
 
-Der CM4 ermittelt das Boot-Medium automatisch anhand seiner Hardware: eMMC-Varianten booten vom eMMC, lite-Varianten von microSD. **Kein Mix-and-Match** möglich.
+Default-Verhalten: eMMC-Varianten booten primär vom eMMC, lite-Varianten von microSD. Die **Boot-Reihenfolge ist über das `rpi-eeprom-config` Bootloader-Setting konfigurierbar** — eMMC-Varianten können also auch zum SD-Boot gezwungen werden, falls gewünscht (Recovery-Szenarien, Test-Setups).
 
 ## Steckverbinder
 
@@ -82,7 +82,7 @@ Carrier-eigene Sicht auf `J101`:
 | a3  | GND  | b3  | GND  |
 | a4  | +5V  | b4  | +5V  |
 | a5  | +5V  | b5  | +5V  |
-| a6  | USB D+ | b6 | USB D− |
+| a6  | USB D+ | b6 | USB D- |
 | a7  | NC   | b7  | NC   |
 | a8  | I²C SDA | b8 | USB_ID |
 | a9  | I²C SCL | b9 | nRPIBOOT |
@@ -94,7 +94,7 @@ Carrier-eigene Sicht auf `J101`:
 | ------- | -------- |
 | **RT9742GGJ5** (U401) | Load-Switch / Strombegrenzer. Steuert die Versorgung der microSD-Karte (Eingang `SD_PWR_ON` vom CM4 → Ausgang gefilterte +3V3 zur SD-Karte). Erlaubt SD-Power-Cycle vom CM4. |
 | **SN74LV1T34DBV** (U201) | Single-Buffer / Level-Shifter (3.3 V). Treibt die Power-LED aus dem CM4-Signal `LED_nPWR` heraus — entkoppelt von schwachen CM4-Boot-Pin-Treibstärken. |
-| **2× TPD4EUSB30** (U301, U302) | USB-ESD-Schutz (TI 4-Kanal TVS). Schützt die USB-Datenleitungen vor Spitzen am Bus-Stecker. |
+| **2× TPD4EUSB30** (U301, U302) | ESD-Schutz für die vier **Ethernet-MDI-Differential-Paare** (`ETH_TRD0/1/2/3_P/N`) zwischen CM4-PHY und RJ45-Magnetics. Trotz des „USB30"-Namens ein generischer 4-Kanal-TVS, hier auf den Ethernet-Linien verschaltet. |
 | **D201 (Activity-LED)** | Direkt vom CM4-Pin `LED_nACTIVITY` via Vorwiderstand (R201). Blinkt bei eMMC- oder SD-I/O. |
 | **D202 (Power-LED)** | Über den SN74LV1T34-Buffer vom CM4-Pin `LED_nPWR`. Leuchtet sobald der CM4 läuft. |
 
