@@ -6,7 +6,7 @@
 	(paper "A4")
 	(title_block
 		(title "MicroSD Slot for CM4 (just for debugging!)")
-		(rev "<<HASH>>")
+		(rev "<<VERSION>>")
 		(company "Amateurfunkclub für Remote Stationen")
 	)
 	(lib_symbols
