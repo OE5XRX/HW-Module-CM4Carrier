@@ -9,7 +9,7 @@
 	(paper "A4")
 	(title_block
 		(title "CM4")
-		(rev "<<HASH>>")
+		(rev "<<VERSION>>")
 		(company "Amateurfunkclub für Remote Stationen")
 		(comment 1 "JLC04161H-7628")
 	)
@@ -14528,7 +14528,7 @@
 			(justify left bottom)
 		)
 	)
-	(gr_text "<<HASH>>"
+	(gr_text "<<VERSION>>"
 		(at 118.114 132.408 0)
 		(layer "F.SilkS")
 		(uuid "2e600c3d-66b0-4552-a461-f5461cbf5635")
