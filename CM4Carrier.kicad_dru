@@ -1,0 +1,10 @@
+(version 1)
+
+# J201/J202 are the Hirose DF40 CM4 board-to-board connectors (0.4 mm pitch).
+# A solder mask web between their pads is not manufacturable, so the shared
+# mask opening is intentional. KiCad 10 no longer matched the 190 position-based
+# DRC exclusions that covered this; this rule replaces them.
+(rule "DF40 fine-pitch mask opening"
+  (condition "A.memberOfFootprint('J201') || A.memberOfFootprint('J202')")
+  (constraint bridged_mask)
+  (severity ignore))
